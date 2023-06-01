@@ -5,5 +5,8 @@ import androidx.lifecycle.ViewModel
 class GameViewModel : ViewModel() {
     private var currentWordcount =0
     private var score =0
-    private var currentWord ="test"
+
+    //backing property
+    private var _currentScrambleWord ="test"
+    val currentSrambleWord : String get() = _currentScrambleWord
 }
