@@ -60,7 +60,17 @@ class GameViewModel : ViewModel() {
         Log.d(TAG, "GameViewModel destroyed!!!")
     }
 
+    private fun increaseScore(){
+        _score+= SCORE_INCREASE
+    }
 
+    fun isUserWordCorrect(playWord : String) : Boolean{
+        if(playWord.equals(currentWord,true)){
+            increaseScore()
+            return true
+        }
+        return false
+    }
 
 
 }

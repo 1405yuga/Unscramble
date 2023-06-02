@@ -78,12 +78,20 @@ class GameFragment : Fragment() {
     * Displays the next scrambled word.
     */
     private fun onSubmitWord() {
-        if(viewModel.nextWord()){
-            updateNextWordOnScreen()
+        val playerWord = binding.textInputEditText.text.toString()
+        if(viewModel.isUserWordCorrect(playerWord)){
+            setErrorTextField(false)
+            if(viewModel.nextWord()){
+                updateNextWordOnScreen()
+            }
+            else{
+                showFinalDialog()
+            }
         }
         else{
-            showFinalDialog()
+            setErrorTextField(true)
         }
+
     }
 
     /*
