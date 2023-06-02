@@ -8,36 +8,40 @@ val TAG = "Game Fragment"
 
 class GameViewModel : ViewModel() {
     private var currentWordcount = 0
-    private var score = 0
+
     private var wordsList: MutableList<String> = mutableListOf()
     private lateinit var currentWord: String
 
     //backing property
-    private  var _currentScrambleWord ="test"
+    private lateinit var _currentScrambleWord : String
     val currentScrambleWord: String get() = _currentScrambleWord
+    private var _score = 0
+    val score : Int
+        get() = _score
 
     private fun getNextWord() {
         Log.d(TAG, "getNextWord called!!")
-
-
-        do {
-            currentWord = allWordsList.random()
-        } while (!wordsList.contains(currentWord))
+        currentWord = allWordsList.random()
         val tempWord = currentWord.toCharArray()
+        tempWord.shuffle()
 
         //shuffle the words until it is not same as current word
-        while (!tempWord.toString().equals(currentWord)) {
+        while (String(tempWord).equals(currentWord, false)) {
             tempWord.shuffle()
         }
 
         //check if it already used word
-        _currentScrambleWord = String(tempWord)
-        ++currentWordcount
-        wordsList.add(currentWord)
+        if (wordsList.contains(currentWord)) {
+            getNextWord()
+        } else {
+            _currentScrambleWord = String(tempWord)
+            ++currentWordcount
+            wordsList.add(currentWord)
+        }
 
     }
 
-    private fun nextWord(): Boolean {
+    fun nextWord(): Boolean {
         return if (currentWordcount < MAX_NO_OF_WORDS) {
             getNextWord()
             true
@@ -47,6 +51,7 @@ class GameViewModel : ViewModel() {
     //initializer block
     init {
         Log.d(TAG, "GameViewModel initiated")
+        getNextWord()
     }
 
     //called when view model destroyed
@@ -54,6 +59,8 @@ class GameViewModel : ViewModel() {
         super.onCleared()
         Log.d(TAG, "GameViewModel destroyed!!!")
     }
+
+
 
 
 }
