@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 val TAG = "Game Fragment"
 
 class GameViewModel : ViewModel() {
-    private var currentWordcount = 0
+
 
     private var wordsList: MutableList<String> = mutableListOf()
     private lateinit var currentWord: String
@@ -18,6 +18,8 @@ class GameViewModel : ViewModel() {
     private var _score = 0
     val score : Int
         get() = _score
+    private var _currentWordcount = 0
+    val currentWordcount : Int get() = _currentWordcount
 
     private fun getNextWord() {
         Log.d(TAG, "getNextWord called!!")
@@ -35,7 +37,7 @@ class GameViewModel : ViewModel() {
             getNextWord()
         } else {
             _currentScrambleWord = String(tempWord)
-            ++currentWordcount
+            ++_currentWordcount
             wordsList.add(currentWord)
         }
 
@@ -70,6 +72,13 @@ class GameViewModel : ViewModel() {
             return true
         }
         return false
+    }
+
+    fun reinitializeData(){
+        _score=0
+        _currentWordcount=0
+        wordsList.clear()
+        getNextWord()
     }
 
 

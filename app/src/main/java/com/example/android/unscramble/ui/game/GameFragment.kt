@@ -50,6 +50,8 @@ class GameFragment : Fragment() {
         binding = GameFragmentBinding.inflate(inflater, container, false)
         //gamefragment created
         Log.d(TAG, "GameFragment created/re-created!")
+        Log.d(TAG, "Word: ${viewModel.currentScrambleWord} " +
+                "Score: ${viewModel.score} WordCount: ${viewModel.currentWordcount}")
         return binding.root
     }
 
@@ -122,6 +124,7 @@ class GameFragment : Fragment() {
      * restart the game.
      */
     private fun restartGame() {
+        viewModel.reinitializeData()
         setErrorTextField(false)
         updateNextWordOnScreen()
     }
